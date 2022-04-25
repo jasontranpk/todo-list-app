@@ -1,0 +1,92 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.top {
+    background-color: grey;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar {
+    background-color: yellow;
+    width: 20vw;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main {
+
+    flex-grow: 1;
+    display: flex;
+}
+
+.content {
+    background-color: green;
+    flex-grow: 1;
+    padding: 15px;
+}
+.footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+}
+.sidebar ul{
+    list-style: none;
+}
+.sidebar ul li{
+    margin-top: 5px;
+}
+.sidebar ul a{
+    text-decoration: none;
+    color: black;
+}
+.project-list{
+    margin-top: 20px;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+}
+.title{
+    font-size: 1.2em;
+}
+.todo-container{
+    background-color: white;
+    flex-grow: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 30px;
+}
+.todo-item{
+    background-color: purple;
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.todo-item span{
+    margin-left: auto;
+}
