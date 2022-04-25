@@ -18,7 +18,8 @@
 }
 
 .top {
-    background-color: grey;
+    background-color: #171717;
+    color: #e5e5e5;
     min-height: 120px;
     display: flex;
     align-items: center;
@@ -26,7 +27,8 @@
 }
 
 .sidebar {
-    background-color: yellow;
+    background-color: #404040;
+    color: #e5e5e5;
     width: 20vw;
     padding: 15px;
     display: flex;
@@ -41,11 +43,13 @@
 }
 
 .content {
-    background-color: green;
+    background-color: #e5e5e5;
     flex-grow: 1;
     padding: 15px;
 }
 .footer{
+    background-color: #171717;
+    color: #e5e5e5;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -53,13 +57,15 @@
 }
 .sidebar ul{
     list-style: none;
+    
 }
 .sidebar ul li{
     margin-top: 5px;
+
 }
 .sidebar ul a{
     text-decoration: none;
-    color: black;
+    color: #e5e5e5;
 }
 .project-list{
     margin-top: 20px;
@@ -72,7 +78,7 @@
     font-size: 1.2em;
 }
 .todo-container{
-    background-color: white;
+    background-color: #e5e5e5;
     flex-grow: 1;
     padding: 20px;
     display: flex;
@@ -81,12 +87,23 @@
     gap: 30px;
 }
 .todo-item{
-    background-color: purple;
+    background-color: #a3a3a3;
     padding: 15px;
     display: flex;
     gap: 10px;
     align-items: center;
+    border-radius: 10px;
 }
 .todo-item span{
     margin-left: auto;
+}
+.add-task{
+    display: flex;
+    align-items: center;
+
+}
+.add-task a{
+    text-decoration: none;
+    color: #171717;
+    font-size: 1.1em;
 }
