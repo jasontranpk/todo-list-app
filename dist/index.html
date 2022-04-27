@@ -24,13 +24,13 @@
                 </ul>
                 <div class="sb-projects">
                     <p class="title">Projects</p>
-                    <ul class="project-list">
-                        <li class="sb-url"><a href="">project 1</a></li>
+                    <ul class="project-list" id="project-list">
+                        <!-- <li class="sb-url"><a href="">project 1</a></li>
                         <li class="sb-url"><a href="">project 2</a></li>
-                        <li class="sb-url"><a href="">project 3</a></li>
+                        <li class="sb-url"><a href="">project 3</a></li> -->
                     </ul>
                 </div>
-            
+
             </div>
             <div class="content">
                 <p class="title">Inbox</p>
@@ -39,14 +39,27 @@
                         <a href="">Add Task </a>
                     </div>
                     <div class="todo-item">
-                        <input type="checkbox" name="" id=""> todoitems <span>20/11/2023</span>
+                        -<input type="checkbox" name="" id=""> todo-items <span>20/11/2023</span>
                     </div> -->
- 
+
                 </div>
             </div>
         </div>
+        <!-- Trigger/Open The Modal -->
+        <button id="myBtn">Open Modal</button>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="task-name"></p>
+            </div>
+
+        </div>
         <div class="footer">
-             Copyright by Tran Son
+            Copyright by Tran Son
         </div>
     </div>
 </body>
