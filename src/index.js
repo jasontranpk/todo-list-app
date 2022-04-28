@@ -1,7 +1,9 @@
 import './style.css';
-
 import todoItem from './todoItem';
 import project from './project';
+import {format, isSameDay, isSameWeek, addDays} from 'date-fns'
+
+const today = new Date();
 
 const todo =  (() => {
     const todoList = [];
@@ -13,20 +15,20 @@ const todo =  (() => {
         _todoContainer.innerHTML = '';
         if(opt == 'inbox'){
             todoList.forEach( (val, index) => {
-                if(val.done == false || val.removed == true){
+                if(val.done == false && val.removed == true){
                     renderTask(opt, val, index);
                 }
             });
             createDelBtn();
         } else if(opt == 'today'){
             todoList.forEach( (val, index) => {
-                if(val.done == false || val.removed == true){
+                if(val.done == false && val.removed == true && isSameDay(today, val.dueDate)){
                     renderTask(opt, val, index);
                 }
             });
         } else if(opt == 'thisWeek'){
             todoList.forEach( (val, index) => {
-                if(val.done == false || val.removed == true){
+                if(val.done == false && val.removed == true && isSameWeek(today, val.dueDate)){
                     renderTask(opt, val, index);
                 }
             });
@@ -47,7 +49,7 @@ const todo =  (() => {
         taskNameSpan.className = 'task-name';
 
         const dueDateSpan = document.createElement('span');
-        dueDateSpan.textContent = task.dueDate;
+        dueDateSpan.textContent = format(task.dueDate, 'MM/dd/yyyy');
         dueDateSpan.className = 'due-date';
 
         const xBtn = document.createElement('a');
@@ -173,10 +175,12 @@ const projects = (()=> {
     }
     return {add, render}
 })();
+
+
 const todo1 = todoItem('Call Mom', 'this is sample', '1/1/2022',1, false);
-const todo2 = todoItem('Get Groceries', 'this is sample', '1/1/2022',1, false);
+const todo2 = todoItem('Get Groceries', 'this is sample', today,1, false);
 const todo3 = todoItem('Pay Electricity Bill', 'this is sample', '1/1/2022',1, false);
-const todo4 = todoItem('Get Dentist Appointment', 'this is sample', '1/1/2022',2, false);
+const todo4 = todoItem('Get Dentist Appointment', 'this is sample', addDays(today,2),2, false);
 
 
 todo.add(todo1);
@@ -197,3 +201,20 @@ projects.add(project3);
 
 todo.render('inbox');
 projects.render();
+
+const inboxNav = document.getElementById('inbox-nav');
+const todayNav = document.getElementById('today-nav');
+const thisWeekNav = document.getElementById('thisWeek-nav');
+
+inboxNav.addEventListener('click',(e) => {
+    e.preventDefault();
+    todo.render('inbox')
+})
+todayNav.addEventListener('click',(e) => {
+    e.preventDefault();
+    todo.render('today')
+})
+thisWeekNav.addEventListener('click',(e) => {
+    e.preventDefault();
+    todo.render('thisWeek')
+})

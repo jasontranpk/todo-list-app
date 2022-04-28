@@ -2,7 +2,7 @@ function todoItem(title, description, dueDate, priority, done, removed){
     const todoItem = {};
     todoItem.title = title;
     todoItem.description = description;
-    todoItem.dueDate = dueDate;
+    todoItem.dueDate = new Date(dueDate);
     todoItem.priority = priority;
     todoItem.removed = removed;
     if(done){
