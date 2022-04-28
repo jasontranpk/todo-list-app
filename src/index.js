@@ -5,87 +5,94 @@ import project from './project';
 
 const todo =  (() => {
     const todoList = [];
+    const _todoContainer = document.getElementById('todo-container');
     const add = (todoItem) => {
         todoList.push(todoItem);
     };
     const render = (opt) => {
-        const todoContainer = document.getElementById('todo-container');
-        todoContainer.innerHTML = '';
+        _todoContainer.innerHTML = '';
         if(opt == 'inbox'){
             todoList.forEach( (val, index) => {
-                const todoItemDiv = document.createElement('div');
                 if(val.done == false || val.removed == true){
-                    todoItemDiv.className = 'todo-item';
-
-                    const doneCheckbox = document.createElement('input');
-                    doneCheckbox.type = 'checkbox';
-
-                    const taskNameSpan = document.createElement('span');
-                    taskNameSpan.textContent = val.title;
-                    taskNameSpan.className = 'task-name';
-
-                    const dueDateSpan = document.createElement('span');
-                    dueDateSpan.textContent = val.dueDate;
-                    dueDateSpan.className = 'due-date';
-
-                    const xBtn = document.createElement('a');
-                    xBtn.innerHTML = '&#10006;';
-                    xBtn.className = 'delete-btn';
-
-                    todoItemDiv.appendChild(doneCheckbox);
-                    todoItemDiv.appendChild(taskNameSpan);
-                    todoItemDiv.appendChild(dueDateSpan);
-                    todoItemDiv.appendChild(xBtn);
-
-                    todoContainer.appendChild(todoItemDiv);
-
-                    //Click on task name to edit
-                    taskNameSpan.addEventListener('click', () => {
-                        let tempName = taskNameSpan.textContent;
-                        taskNameSpan.textContent = '';
-                        const taskNameInput = document.createElement('input');
-                        taskNameInput.className = 'task-name-input';
-                        taskNameSpan.appendChild(taskNameInput);
-                        taskNameInput.focus();
-                        taskNameInput.value = tempName; 
-                        taskNameInput.addEventListener('keypress', (e) => {
-                            if(e.key == 'Enter'){
-                                todoList[index].title = taskNameInput.value; 
-                                render(opt);
-                            }
-                        } )
-                    })
-
-                    dueDateSpan.addEventListener('click', () => {
-                        let tempDate = dueDateSpan.textContent;
-                        dueDateSpan.textContent = '';
-                        const dueDateInput = document.createElement('input');
-                        dueDateInput.className = 'due-date-input';
-                        dueDateSpan.appendChild(dueDateInput);
-                        dueDateInput.focus();
-                        dueDateInput.value = tempDate; 
-                        dueDateInput.addEventListener('keypress', (e) => {
-                            if(e.key == 'Enter'){
-                                todoList[index].dueDate = dueDateInput.value; 
-                                render(opt);
-                            }
-                        } )
-                    })
-                    //todoItemDiv.innerHTML = `<input type="checkbox" name="" id=""><span class="task-name">${val.title}</span>  <span class="due-date">20/11/2023 <a href="" class="delete-btn"></a></span>`;
-
-
-                    // todoItemDiv.addEventListener('click', e => {
-                    //     const taskName = document.getElementById('task-name');
-                    //     taskName.textContent = val.title;
-                    //     modal.style.display = "block";
-                    // })
+                    renderTask(opt, val, index);
                 }
-
-    
             });
             createDelBtn();
+        } else if(opt == 'today'){
+            todoList.forEach( (val, index) => {
+                if(val.done == false || val.removed == true){
+                    renderTask(opt, val, index);
+                }
+            });
+        } else if(opt == 'thisWeek'){
+            todoList.forEach( (val, index) => {
+                if(val.done == false || val.removed == true){
+                    renderTask(opt, val, index);
+                }
+            });
+        }else{
+
         }
         createAddBtn();
+    }   
+    const renderTask = (opt, task, index) => {
+        const todoItemDiv = document.createElement('div');
+        todoItemDiv.className = 'todo-item';
+
+        const doneCheckbox = document.createElement('input');
+        doneCheckbox.type = 'checkbox';
+
+        const taskNameSpan = document.createElement('span');
+        taskNameSpan.textContent = task.title;
+        taskNameSpan.className = 'task-name';
+
+        const dueDateSpan = document.createElement('span');
+        dueDateSpan.textContent = task.dueDate;
+        dueDateSpan.className = 'due-date';
+
+        const xBtn = document.createElement('a');
+        xBtn.innerHTML = '&#10006;';
+        xBtn.className = 'delete-btn';
+
+        todoItemDiv.appendChild(doneCheckbox);
+        todoItemDiv.appendChild(taskNameSpan);
+        todoItemDiv.appendChild(dueDateSpan);
+        todoItemDiv.appendChild(xBtn);
+
+        _todoContainer.appendChild(todoItemDiv);
+
+        //Click on task name to edit
+        taskNameSpan.addEventListener('click', () => {
+            let tempName = taskNameSpan.textContent;
+            taskNameSpan.textContent = '';
+            const taskNameInput = document.createElement('input');
+            taskNameInput.className = 'task-name-input';
+            taskNameSpan.appendChild(taskNameInput);
+            taskNameInput.focus();
+            taskNameInput.value = tempName; 
+            taskNameInput.addEventListener('keypress', (e) => {
+                if(e.key == 'Enter'){
+                    todoList[index].title = taskNameInput.value; 
+                    render(opt);
+                }
+            } )
+        })
+
+        dueDateSpan.addEventListener('click', () => {
+            let tempDate = dueDateSpan.textContent;
+            dueDateSpan.textContent = '';
+            const dueDateInput = document.createElement('input');
+            dueDateInput.className = 'due-date-input';
+            dueDateSpan.appendChild(dueDateInput);
+            dueDateInput.focus();
+            dueDateInput.value = tempDate; 
+            dueDateInput.addEventListener('keypress', (e) => {
+                if(e.key == 'Enter'){
+                    todoList[index].dueDate = dueDateInput.value; 
+                    render(opt);
+                }
+            } )
+        })
     }
     const createDelBtn = () => {
         let delBtns = document.getElementsByClassName('delete-btn');
@@ -190,28 +197,3 @@ projects.add(project3);
 
 todo.render('inbox');
 projects.render();
-
-var modal = document.getElementById("myModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
