@@ -12,6 +12,7 @@ const todo =  (() => {
         todoList.push(todoItem);
     };
     const render = (opt) => {
+
         _todoContainer.innerHTML = '';
         if(opt == 'inbox'){
             todoList.forEach( (val, index) => {
@@ -26,14 +27,22 @@ const todo =  (() => {
                     renderTask(opt, val, index);
                 }
             });
+            createDelBtn();
         } else if(opt == 'thisWeek'){
             todoList.forEach( (val, index) => {
                 if(val.done == false && val.removed == true && isSameWeek(today, val.dueDate)){
                     renderTask(opt, val, index);
                 }
             });
+            createDelBtn();
         }else{
-
+            todoList.forEach( (val, index) => {
+                alert(val.project.name);
+                if(val.done == false && val.removed == true && opt == val.project.name){
+                    renderTask(opt, val, index);
+                }
+            });
+            createDelBtn();
         }
         createAddBtn(opt);
     }   
@@ -174,8 +183,13 @@ const projects = (()=> {
         const projectContainer = document.getElementById('project-list');
         projectList.forEach( (val) => {
             const project = document.createElement('div');
-            project.innerHTML = `<li class="sb-url"><a href="">${val.name}</a></li>`;
+            project.innerHTML = `<li class="sb-url"><a href="" id="${val.name}">${val.name}</a></li>`;
             projectContainer.appendChild(project);
+            const projectNav = document.getElementById(val.name);
+            projectNav.addEventListener('click', (e) => {
+                e.preventDefault();
+                todo.render(val.name);
+            })
         });
 
     }
@@ -200,6 +214,9 @@ project1.add(todo3);
 console.log(project1);
 const project2 = project('Website Update');
 const project3 = project('Product Roadmap');
+
+const todo5 = todoItem('Find new template', 'this is sample', '1/1/2022',project2, false);
+todo.add(todo5)
 
 projects.add(project1);
 projects.add(project2);
