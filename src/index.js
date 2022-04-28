@@ -35,7 +35,7 @@ const todo =  (() => {
         }else{
 
         }
-        createAddBtn();
+        createAddBtn(opt);
     }   
     const renderTask = (opt, task, index) => {
         const todoItemDiv = document.createElement('div');
@@ -62,6 +62,11 @@ const todo =  (() => {
         todoItemDiv.appendChild(xBtn);
 
         _todoContainer.appendChild(todoItemDiv);
+
+        doneCheckbox.addEventListener('click', (e) =>{
+            todoList[index].done = true;
+            render(opt);
+        })
 
         //Click on task name to edit
         taskNameSpan.addEventListener('click', () => {
@@ -90,7 +95,7 @@ const todo =  (() => {
             dueDateInput.value = tempDate; 
             dueDateInput.addEventListener('keypress', (e) => {
                 if(e.key == 'Enter'){
-                    todoList[index].dueDate = dueDateInput.value; 
+                    todoList[index].dueDate = new Date(dueDateInput.value); 
                     render(opt);
                 }
             } )
@@ -109,7 +114,7 @@ const todo =  (() => {
             })
         })
     }
-    const createAddBtn = () => {
+    const createAddBtn = (opt) => {
         const todoContainer = document.getElementById('todo-container');
         const addTask = document.createElement('div');
         addTask.innerHTML = `<div class="add-task"><a id="add-task-btn" href=""> &#43; Add Task </a></div>`; 
@@ -144,13 +149,14 @@ const todo =  (() => {
             cancelBtn.textContent = 'Cancel';
             addTaskWrapper.appendChild(cancelBtn);
             cancelBtn.addEventListener('click', (e) => {
-                render('inbox');
+                render(opt);
             })
             acceptBtn.addEventListener('click', (e) => {
-                const todoTemp = todoItem(taskNameInput.value)
+                const todoTemp = todoItem(taskNameInput.value);
+                todoTemp.dueDate = today;
                 todo.add(todoTemp);
                 //console.log(todoList);
-                render('inbox');
+                render(opt);
             })
 
         })
