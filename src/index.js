@@ -1,11 +1,11 @@
 import './style.css';
 import todoItem from './todoItem';
 import project from './project';
-import {format, isSameDay, isSameWeek, addDays} from 'date-fns'
+import { format, isSameDay, isSameWeek, addDays } from 'date-fns'
 
 const today = new Date();
 
-const todo =  (() => {
+const todo = (() => {
     const todoList = [];
     const _todoContainer = document.getElementById('todo-container');
     const add = (todoItem) => {
@@ -14,38 +14,37 @@ const todo =  (() => {
     const render = (opt) => {
 
         _todoContainer.innerHTML = '';
-        if(opt == 'inbox'){
-            todoList.forEach( (val, index) => {
-                if(val.done == false && val.removed == true){
+        if (opt == 'inbox') {
+            todoList.forEach((val, index) => {
+                if (val.done == false && val.removed == true) {
                     renderTask(opt, val, index);
                 }
             });
             createDelBtn();
-        } else if(opt == 'today'){
-            todoList.forEach( (val, index) => {
-                if(val.done == false && val.removed == true && isSameDay(today, val.dueDate)){
+        } else if (opt == 'today') {
+            todoList.forEach((val, index) => {
+                if (val.done == false && val.removed == true && isSameDay(today, val.dueDate)) {
                     renderTask(opt, val, index);
                 }
             });
             createDelBtn();
-        } else if(opt == 'thisWeek'){
-            todoList.forEach( (val, index) => {
-                if(val.done == false && val.removed == true && isSameWeek(today, val.dueDate)){
+        } else if (opt == 'thisWeek') {
+            todoList.forEach((val, index) => {
+                if (val.done == false && val.removed == true && isSameWeek(today, val.dueDate)) {
                     renderTask(opt, val, index);
                 }
             });
             createDelBtn();
-        }else{
-            todoList.forEach( (val, index) => {
-                alert(val.project.name);
-                if(val.done == false && val.removed == true && opt == val.project.name){
+        } else {
+            todoList.forEach((val, index) => {
+                if (val.done == false && val.removed == true && opt == val.project.name) {
                     renderTask(opt, val, index);
                 }
             });
             createDelBtn();
         }
         createAddBtn(opt);
-    }   
+    }
     const renderTask = (opt, task, index) => {
         const todoItemDiv = document.createElement('div');
         todoItemDiv.className = 'todo-item';
@@ -62,7 +61,7 @@ const todo =  (() => {
         dueDateSpan.className = 'due-date';
 
         const xBtn = document.createElement('a');
-        xBtn.innerHTML = '&#10006;';
+        xBtn.innerHTML = '&#10007;';
         xBtn.className = 'delete-btn';
 
         todoItemDiv.appendChild(doneCheckbox);
@@ -72,7 +71,7 @@ const todo =  (() => {
 
         _todoContainer.appendChild(todoItemDiv);
 
-        doneCheckbox.addEventListener('click', (e) =>{
+        doneCheckbox.addEventListener('click', () => {
             todoList[index].done = true;
             render(opt);
         })
@@ -85,13 +84,13 @@ const todo =  (() => {
             taskNameInput.className = 'task-name-input';
             taskNameSpan.appendChild(taskNameInput);
             taskNameInput.focus();
-            taskNameInput.value = tempName; 
+            taskNameInput.value = tempName;
             taskNameInput.addEventListener('keypress', (e) => {
-                if(e.key == 'Enter'){
-                    todoList[index].title = taskNameInput.value; 
+                if (e.key == 'Enter') {
+                    todoList[index].title = taskNameInput.value;
                     render(opt);
                 }
-            } )
+            })
         })
 
         dueDateSpan.addEventListener('click', () => {
@@ -101,20 +100,20 @@ const todo =  (() => {
             dueDateInput.className = 'due-date-input';
             dueDateSpan.appendChild(dueDateInput);
             dueDateInput.focus();
-            dueDateInput.value = tempDate; 
+            dueDateInput.value = tempDate;
             dueDateInput.addEventListener('keypress', (e) => {
-                if(e.key == 'Enter'){
-                    todoList[index].dueDate = new Date(dueDateInput.value); 
+                if (e.key == 'Enter') {
+                    todoList[index].dueDate = new Date(dueDateInput.value);
                     render(opt);
                 }
-            } )
+            })
         })
     }
     const createDelBtn = () => {
         let delBtns = document.getElementsByClassName('delete-btn');
         delBtns = Array.from(delBtns);
         //console.log(delBtn);
-        delBtns.forEach((val , index) =>{
+        delBtns.forEach((val, index) => {
             val.addEventListener('click', (e) => {
                 e.preventDefault();
                 todoList.splice(index, 1);
@@ -126,7 +125,7 @@ const todo =  (() => {
     const createAddBtn = (opt) => {
         const todoContainer = document.getElementById('todo-container');
         const addTask = document.createElement('div');
-        addTask.innerHTML = `<div class="add-task"><a id="add-task-btn" href=""> &#43; Add Task </a></div>`; 
+        addTask.innerHTML = `<div class="add-task"><a id="add-task-btn" href=""> &#43; Add Task </a></div>`;
         todoContainer.appendChild(addTask);
         const addTaskBtn = document.getElementById('add-task-btn');
         addTaskBtn.addEventListener('click', e => {
@@ -157,10 +156,10 @@ const todo =  (() => {
             cancelBtn.className = 'btn';
             cancelBtn.textContent = 'Cancel';
             addTaskWrapper.appendChild(cancelBtn);
-            cancelBtn.addEventListener('click', (e) => {
+            cancelBtn.addEventListener('click', () => {
                 render(opt);
             })
-            acceptBtn.addEventListener('click', (e) => {
+            acceptBtn.addEventListener('click', () => {
                 const todoTemp = todoItem(taskNameInput.value);
                 todoTemp.dueDate = today;
                 todo.add(todoTemp);
@@ -169,19 +168,19 @@ const todo =  (() => {
             })
 
         })
-        
+
     }
-    return {render, add}
+    return { render, add }
 })();
-const projects = (()=> {
+const projects = (() => {
 
     const projectList = [];
     const add = (project) => {
         projectList.push(project);
     }
-    const render = () =>{
+    const render = () => {
         const projectContainer = document.getElementById('project-list');
-        projectList.forEach( (val) => {
+        projectList.forEach((val) => {
             const project = document.createElement('div');
             project.innerHTML = `<li class="sb-url"><a href="" id="${val.name}">${val.name}</a></li>`;
             projectContainer.appendChild(project);
@@ -193,14 +192,14 @@ const projects = (()=> {
         });
 
     }
-    return {add, render}
+    return { add, render }
 })();
 
 
-const todo1 = todoItem('Call Mom', 'this is sample', '1/1/2022',1, false);
-const todo2 = todoItem('Get Groceries', 'this is sample', today,1, false);
-const todo3 = todoItem('Pay Electricity Bill', 'this is sample', '1/1/2022',1, false);
-const todo4 = todoItem('Get Dentist Appointment', 'this is sample', addDays(today,2),2, false);
+const todo1 = todoItem('Call Mom', 'this is sample', '1/1/2022', 1, false);
+const todo2 = todoItem('Get Groceries', 'this is sample', today, 1, false);
+const todo3 = todoItem('Pay Electricity Bill', 'this is sample', '1/1/2022', 1, false);
+const todo4 = todoItem('Get Dentist Appointment', 'this is sample', addDays(today, 2), 2, false);
 
 
 todo.add(todo1);
@@ -215,7 +214,7 @@ console.log(project1);
 const project2 = project('Website Update');
 const project3 = project('Product Roadmap');
 
-const todo5 = todoItem('Find new template', 'this is sample', '1/1/2022',project2, false);
+const todo5 = todoItem('Find new template', 'this is sample', '1/1/2022', project2, false);
 todo.add(todo5)
 
 projects.add(project1);
@@ -229,15 +228,15 @@ const inboxNav = document.getElementById('inbox-nav');
 const todayNav = document.getElementById('today-nav');
 const thisWeekNav = document.getElementById('thisWeek-nav');
 
-inboxNav.addEventListener('click',(e) => {
+inboxNav.addEventListener('click', (e) => {
     e.preventDefault();
     todo.render('inbox')
 })
-todayNav.addEventListener('click',(e) => {
+todayNav.addEventListener('click', (e) => {
     e.preventDefault();
     todo.render('today')
 })
-thisWeekNav.addEventListener('click',(e) => {
+thisWeekNav.addEventListener('click', (e) => {
     e.preventDefault();
     todo.render('thisWeek')
 })

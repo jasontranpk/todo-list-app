@@ -8,4 +8,4 @@ function project(name){
     return project;
 
 }
-export default project;
+export default project
